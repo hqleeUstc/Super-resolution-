@@ -18,7 +18,9 @@ Latest Research on super-resolution
 
 ## 视频空间超分辨率
 视频超分辨率的常规步骤：1.对输入视频进行运动估计和运动补偿，消除大的 motion blur；2.进行多帧融合，把多帧的信息融合在一起；3.超分辨率
-1. VSRnet 2016, 先对视频各帧进行bicubic上插值，然后用
-6. SPMC 2017, Detail-revealing Deep Video Super-resolution, [Paper](http://openaccess.thecvf.com/content_ICCV_2017/papers/Tao_Detail-Revealing_Deep_Video_ICCV_2017_paper.pdf), [Code](https://github.com/hqleeUstc/SPMC_VideoSR). 腾讯公司的ICCV 2017的成果，通过构建sub-pixel motion compensation(SPMC)层，在运动补偿的同时进行分辨率的提升。
+1. VSRnet 2016, 先对视频各帧进行bicubic上插值，然后用Druleas算法估计光流（结合了LG思路和total variation），并采用adaptive MC的思路，如果运动很大和有遮挡，主要用当前帧信息，如果运动小，相邻帧的信息用的多。做完MC后输入超分辨率网络，在第一个卷积层之前concatenate channels或第二层之前，即采用fusion的方式融合多帧信息。考虑到前后帧相对于当前帧的对称性，前后帧的卷积层share weights。
+2. VESPCN 2017. end-to-end的视频空间SR网络。[Paper](https://arxiv.org/pdf/1611.05250), 用空间变换网的思路进行运动补偿，然后用early fusion、 fusion或3D conv进行多帧融合，然后用sub-pixel convolution实现空间超分辨率，速度非常快。
+3. SPMC 2017, Detail-revealing Deep Video Super-resolution, [Paper](http://openaccess.thecvf.com/content_ICCV_2017/papers/Tao_Detail-Revealing_Deep_Video_ICCV_2017_paper.pdf), [Code](https://github.com/hqleeUstc/SPMC_VideoSR). 腾讯公司的ICCV 2017的成果，通过构建sub-pixel motion compensation(SPMC)层，在运动补偿的同时进行分辨率的提升，超分辨率采用encoder-LSTM-decoder的思路，有skip connections。
+4. FRVSR **CVPR 2018**，[Paper](https://arxiv.org/pdf/1801.04590), 对前后两低分辨率帧，采用encoder-decoder估计光流，用双线性插值upscale光流，并warp前一帧高光谱图，warp后的图用space-to-depth变成低分辨率图，和当前帧的低分辨率图一起进行超分辨率，超分辨率用的是EnhanceNet。
 																											
 																											
