@@ -7,7 +7,7 @@ Latest Research on super-resolution
 **先对图像bicubic插值**
 1. SRCNN 2014, Image Super-Resolution Using Deep Convolutional Networks, [Project](http://mmlab.ie.cuhk.edu.hk/projects/SRCNN.html). 
 三层卷积网，先用bicubic插值对图像进行upsample，然后用三层卷积网恢复高频信息。因为对高分辨率图作用，运算复杂度大。
-2. VDSR 2016，Accurate Image Super-Resolution Using Very Deep Convolutional Networks， [Paper](https://arxiv.org/abs/1511.04587), [Code].(https://github.com/huangzehao/caffe-vdsr)先用bicubic插值对图像进行upsample，然后用20层卷积网学习残差。利用残差学习加快学习速率，学习率高，用gradient clipping避免梯度爆炸。SGD。
+2. VDSR 2016，Accurate Image Super-Resolution Using Very Deep Convolutional Networks， [Paper](https://arxiv.org/abs/1511.04587), [Code](https://github.com/huangzehao/caffe-vdsr) . 先用bicubic插值对图像进行upsample，然后用20层卷积网学习残差。利用残差学习加快学习速率，学习率高，用gradient clipping避免梯度爆炸。SGD。
 **直接在LR空间操作**
 2. FSRCNN 2016，Accelerating the Super-Resolution Convolutional Neural Network， [Project](http://mmlab.ie.cuhk.edu.hk/projects/FSRCNN.html). 
 先在低分辨率图上用卷积层提取特征，然后用卷积核为1x1的卷积层进行shrink，限制后续的feature mapping过程在低维空间进行。做完feature mapping后，用卷积核为1x1的卷积层进行expand，提升feature maps数量。最后进行deconvolution，对图像进行分辨率提升。每个卷积层后的激活函数是PReLU。
