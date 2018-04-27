@@ -4,11 +4,15 @@ Latest Research on super-resolution
 ## 图像空间超分辨率
 图像的空间超分辨率从观测到的低空间分辨率图像重建出相应的高分辨率图像。因为SR是一个逆问题，一个低分辨率图存在多张高分辨率图与之对应，传统方法会引入先验信息进行规范性约束。神经网络的方法直接学习数据包含的低/高分辨率小块之间的映射。
 
-**先对图像bicubic插值**
+
+
+### 先对图像bicubic插值
 1. SRCNN 2014, Image Super-Resolution Using Deep Convolutional Networks, [Project](http://mmlab.ie.cuhk.edu.hk/projects/SRCNN.html). 
 三层卷积网，先用bicubic插值对图像进行upsample，然后用三层卷积网恢复高频信息。因为对高分辨率图作用，运算复杂度大。
 2. VDSR 2016，Accurate Image Super-Resolution Using Very Deep Convolutional Networks， [Paper](https://arxiv.org/abs/1511.04587), [Code](https://github.com/huangzehao/caffe-vdsr) . 先用bicubic插值对图像进行upsample，然后用20层卷积网学习残差。利用残差学习加快学习速率，学习率高，用gradient clipping避免梯度爆炸。SGD。
-**直接在LR空间操作**
+
+
+### 直接在LR空间操作
 2. FSRCNN 2016，Accelerating the Super-Resolution Convolutional Neural Network， [Project](http://mmlab.ie.cuhk.edu.hk/projects/FSRCNN.html). 
 先在低分辨率图上用卷积层提取特征，然后用卷积核为1x1的卷积层进行shrink，限制后续的feature mapping过程在低维空间进行。做完feature mapping后，用卷积核为1x1的卷积层进行expand，提升feature maps数量。最后进行deconvolution，对图像进行分辨率提升。每个卷积层后的激活函数是PReLU。
 3. ESPCN 2016，Real-Time Single Image and Video Super-Resolution Using an Efficient Sub-Pixel Convolutional Neural Network, [Paper](https://arxiv.org/abs/1609.05158), [Code](https://github.com/leftthomas/ESPCN).开创性的提出了sub-pixel convolution概念，实现了depth-to-sapce思想，对不同channel用不同的卷积核卷积，提升空间分辨率。比如进行r=2倍上采样，则sub-pixel convolution是r^2c个channel的低分辨率图，输出是c个channel的高空间分辨率图。每个channel的卷积核对应了一种pattern，是低分辨率的像素在高分辨率图中所处的位置pattern。卷积核每次滑动1/r，所以每在一个方向上滑动r次，参与运算LR的pixel变动1次（这r次每次都是用同样的LR中的点，只不过对应卷积核pattern不同），根据被active的权重位置的不同，卷积核共有r^2种pattern，其中active最多的pattern有ceil(ks/r)^2个位置（权重）被actived。
