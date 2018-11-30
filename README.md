@@ -19,7 +19,9 @@ Latest Research on super-resolution
 4. LaPSRN 2017, [Paper](https://arxiv.org/pdf/1710.01992.pdf), [Code](https://github.com/twtygqyy/pytorch-LapSRN) 采用级联金字塔结构，可生成多种分辨率的SR结果，用卷积层在LR空间提取特征，和进行feature mapping，然后用deconvolutional layer进行上采样，输出的特征图一方面连卷积层输出残差，和upsample的低分辨率图一起重构该分辨率下的SR结果，一方面输入下一个分辨率的超分辨率网。三层的金字塔可以实现x2,x4,x8的超分辨率。
 5. EDSR, MDSR cvpr challenge 2017 冠军，[Paper](https://arxiv.org/abs/1707.02921). EDSR：借鉴ResNet提出适用于SR的ResBlock，Resblock由Conv-ReLu-Conv+0.1的residual scaling组成。另外由于卷积层占内存为O(B^2F),B为网络层数，F为feature maps数，所以网络采用增大feature maps数的方法增强网络的表达能力，同时用residual scaling让训练更加稳定。另外，网络用x2的模型预训练x3,x4的模型。也采用L1 loss加快收敛速度。EDSR很宽，有32个卷积层，每层256个 maps。MDSR：是EDSR的改进版，可同时进行x2.x3.x4模型的训练。在网络的前端设置pre-processing modules，对三种scale的模型都用两个kernel size为5x5的Resblocks提取特征，对输入的不同data激活对应的预处理module，再经过fearure mapping，map后的图进入对应scale的卷积层，输出对应scale的超分辨率结果。总而言之，网络的前端和末端是scale-variant的，中间是scale-invariant的。前端的kernel size大，其他的kernel size都是5x5. 另外，训练时还采用了geomeric self-ensemble，对输入数据进行8中几何变换，每种几何变换产生的数据去训练一个模型，最后的输出是8种模型输出结果的平均值。
 6. **RDBnet CVPR 2018**, 将ResNet和Dense Net同时在SR中应用，提出 residual dense block（RDB）的概念，在每个RDB中有三个kernel size为3x3的卷积层+relu，前面的所有卷积层的输出会作为后面所有卷积层的输入，构成dense connections，然后接一个kernel size为1x1的卷积层进行shrink，降低feature maps数量，输出的feature map和RDB的输入加在一起作为总输出，即引入残差学习，卷积网学习的是残差。在RDB内部有local residual learning和local feature fusion（dense结构和1x1的卷积）。多个RDB的连接方式也是dense的，也有global residual learning。不仅可处理普通图像SR，还可以处理有噪声和blur的情况，效果都很好。
-7. RCAN, [Paper](http://openaccess.thecvf.com/content_ECCV_2018/papers/Yulun_Zhang_Image_Super-Resolution_Using_ECCV_2018_paper.pdf), 采用residual in residual 和 residual channel attention block的思路，实现非常深的网络超分辨率。
+7. WDSR CVPR 2018 Challenge, 改变EDSR的resblock的结构，变成channel数先大后小。引入weight normalization。
+7. RCAN ECCV 2018, [Paper](http://openaccess.thecvf.com/content_ECCV_2018/papers/Yulun_Zhang_Image_Super-Resolution_Using_ECCV_2018_paper.pdf), 采用residual in residual 和 residual channel attention block的思路，实现非常深的网络超分辨率。
+
 
 ## 视频空间超分辨率
 视频超分辨率的常规步骤：1.对输入视频进行运动估计和运动补偿，消除大的 motion blur；2.进行多帧融合，把多帧的信息融合在一起；3.超分辨率
