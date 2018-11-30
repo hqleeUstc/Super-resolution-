@@ -22,6 +22,9 @@ Latest Research on super-resolution
 7. WDSR CVPR 2018 Challenge, 改变EDSR的resblock的结构，变成channel数先大后小。引入weight normalization。
 7. RCAN ECCV 2018, [Paper](http://openaccess.thecvf.com/content_ECCV_2018/papers/Yulun_Zhang_Image_Super-Resolution_Using_ECCV_2018_paper.pdf), 采用residual in residual 和 residual channel attention block的思路，实现非常深的网络超分辨率。
 
+8. CARN ECCV 2018. [Paper](http://openaccess.thecvf.com/content_ECCV_2018/papers/Namhyuk_Ahn_Fast_Accurate_and_ECCV_2018_paper.pdf)
+9. MSRN ECCV 2018. [Paper](http://openaccess.thecvf.com/content_ECCV_2018/papers/Juncheng_Li_Multi-scale_Residual_Network_ECCV_2018_paper.pdf)
+
 
 ## 视频空间超分辨率
 视频超分辨率的常规步骤：1.对输入视频进行运动估计和运动补偿，消除大的 motion blur；2.进行多帧融合，把多帧的信息融合在一起；3.超分辨率
